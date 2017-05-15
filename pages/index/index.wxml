@@ -1,0 +1,20 @@
+<!--index.wxml-->
+<view class="container">
+  <view  bindtap="bindViewTap" class="userinfo">
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+  </view>
+  <view class="usermotto">
+    <text class="user-motto">{{motto}}</text>
+  </view>
+  <view  bindtap="bindViewLocation" class="userinfo">
+    <text class="userinfo-nickname">你所在的当前位置：</text>
+    <text class="userinfo-nickname">经度：{{localtion.latitude }}</text>
+    <text class="userinfo-nickname">维度：{{localtion.longitude }}</text>
+    <text class="userinfo-nickname">速度：{{localtion.speed }}</text>
+    <text class="userinfo-nickname">误差范围：{{localtion.accuracy }}</text>
+  </view>
+  <view  bindtap="bindViewRead" class="userinfo">
+     <text class="userinfo-nickname">阅读《苗疆蛊事2》最新章节</text>
+  </view>
+</view>

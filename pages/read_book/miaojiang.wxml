@@ -1,0 +1,9 @@
+<!--miaojiang.wxml-->
+<view class="container">
+  <view class="usermotto">
+    <text class="user-motto"> {{book.title}} </text>
+  </view>
+  <view class="userinfo">
+    <text class="userinfo-nickname">{{book.content}}：</text>
+  </view>
+</view>

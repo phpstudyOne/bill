@@ -58,6 +58,6 @@ App({
   },
   globalData:{
     userInfo:null,
-    requestUrl:'http://phpstudy.duapp1.com/'
+    requestUrl:'https://phpstudy.duapp.com/'
   }
 })

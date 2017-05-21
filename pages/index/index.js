@@ -32,17 +32,6 @@ Page({
       that.setData({
         userInfo:userInfo
       });
-      wx.request({
-        url: root_url + 'test/test', 
-        data: userInfo,
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded'
-        },
-        success: function (res) {
-          console.log(res.data)
-        }
-      });
     }),
     wx.setNavigationBarTitle({
       title: '记账薄'
@@ -50,7 +39,6 @@ Page({
     wx.getLocation({
       type: 'wgs84',
       success: function (res) {
-        console.log(res);
         let latitude = res.latitude;
         let longitude = res.longitude;
         let speed = res.speed;

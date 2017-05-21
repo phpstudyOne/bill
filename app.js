@@ -14,14 +14,37 @@ App({
       //调用登录接口
       wx.login({
         success: function (res) {
-          console.log(res);
-          wx.getUserInfo({
-            success: function (res) {
-              console.log(res);
-              that.globalData.userInfo = res.userInfo
-              typeof cb == "function" && cb(that.globalData.userInfo)
-            }
-          })
+          if(res.code){
+            wx.getUserInfo({
+              success: function (result) {
+                let latitude;
+                let longitude;
+                  wx.getLocation({
+                    type: 'wgs84',
+                    success: function (locationRes) {
+                      latitude = locationRes.latitude;
+                      longitude = locationRes.longitude;
+                      let data = Object.assign({ code: res.code }, result.userInfo, { latitude: latitude, longitude: longitude });
+                      wx.request({
+                        url: that.globalData.requestUrl + 'billUser/weChatLogin',
+                        data: data,
+                        method: 'POST',
+                        header: {
+                          'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        success: function (res) {
+
+                        }
+                      });
+                    }
+                  });
+                that.globalData.userInfo = result.userInfo
+                typeof cb == "function" && cb(that.globalData.userInfo)
+              }
+            });
+          }else{
+            console.log('获取用户登录态失败！' + res.errMsg)
+          }
         }
       })
     }

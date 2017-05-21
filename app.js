@@ -17,27 +17,34 @@ App({
           if(res.code){
             wx.getUserInfo({
               success: function (result) {
-                let latitude;
-                let longitude;
-                  wx.getLocation({
-                    type: 'wgs84',
-                    success: function (locationRes) {
-                      latitude = locationRes.latitude;
-                      longitude = locationRes.longitude;
-                      let data = Object.assign({ code: res.code }, result.userInfo, { latitude: latitude, longitude: longitude });
-                      wx.request({
-                        url: that.globalData.requestUrl + 'billUser/weChatLogin',
-                        data: data,
-                        method: 'POST',
-                        header: {
-                          'content-type': 'application/x-www-form-urlencoded'
-                        },
-                        success: function (res) {
-
-                        }
-                      });
-                    }
-                  });
+                let data = Object.assign({ code: res.code }, result.userInfo);
+                wx.request({
+                  url: that.globalData.requestUrl + 'billUser/weChatLogin',
+                  data: data,
+                  method: 'POST',
+                  header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                  },
+                  success: function (loginRes) {
+                    let latitude;
+                    let longitude;
+                    wx.getLocation({
+                      type: 'wgs84',
+                      success: function (locationRes) {
+                        latitude = locationRes.latitude;
+                        longitude = locationRes.longitude;
+                        wx.request({
+                          url: that.globalData.requestUrl + 'billUser/weChatLog',
+                          data: { user_id: loginRes.data.user_id, latitude: latitude, longitude: longitude},
+                          method: 'POST',
+                          header: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
                 that.globalData.userInfo = result.userInfo
                 typeof cb == "function" && cb(that.globalData.userInfo)
               }
